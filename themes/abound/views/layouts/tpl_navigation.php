@@ -43,7 +43,7 @@
                     'items'=>$menu,
                 )); ?>
     		
-				<?php /*$this->widget('zii.widgets.CMenu',array(
+				<?php $this->widget('zii.widgets.CMenu',array(
 	                    'htmlOptions'=>array('class'=>'pull-right nav'),
 	                    'submenuHtmlOptions'=>array('class'=>'dropdown-menu'),
 						'itemCssClass'=>'item-test',
@@ -52,7 +52,7 @@
 	                        array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 	                        array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
 	                    ),
-	                ));*/ ?>
+	                )); ?>
 	    </div>
     </div>
 	</div>
