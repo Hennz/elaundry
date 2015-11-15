@@ -19,64 +19,103 @@ return array(
 		'application.models.*',
 		'application.components.*',
 
+		/* import for User module */
+		'application.modules.user.models.*',
+        'application.modules.user.components.*',
 		/* import for Rights module */
-		'application.modules.rights.*',
-		'application.modules.rights.components.*', // Correct paths if necessary.
+        'application.modules.rights.*',
+        'application.modules.rights.components.*',
 
 	),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		/*
+		
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'labada',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		*/
-		'rights'=>array(
-		 	'superuserName'=>'Admin', // Name of the role with super user privileges.
-			'authenticatedName'=>'Authenticated', // Name of the authenticated user role.
-			'userIdColumn'=>'id', // Name of the user id column in the database.
-			'userNameColumn'=>'username', // Name of the user name column in the database.
-			'enableBizRule'=>true, // Whether to enable authorization item business rules.
-			'enableBizRuleData'=>false, // Whether to enable data for business rules.
-			'displayDescription'=>true, // Whether to use item description instead of name.
-			'flashSuccessKey'=>'RightsSuccess', // Key to use for setting success flash messages.
-			'flashErrorKey'=>'RightsError', // Key to use for setting error flash messages.
-			'install'=>true, // Whether to install rights.
-			'baseUrl'=>'/rights', // Base URL for Rights. Change if module is nested.
-
-			'layout'=>'rights.views.layouts.main',  // Layout to use for displaying Rights.
-            'appLayout'=>'webroot.themes.abound.views.layouts.main', // Application layout.
-			//'layout'=>'rights.views.layouts.main', // Layout to use for displaying Rights.
-			//'appLayout'=>'application.views.layouts.main', // Application layout.
-			'cssFile'=>'rights.css', // Style sheet file to use for Rights.
-			'install'=>false, // Whether to enable installer.
-			'debug'=>false, // Whether to enable debug mode.
-
-		 ),
+		
+		'user'=>array(
+                'tableUsers' => 'users',
+                'tableProfiles' => 'profiles',
+                'tableProfileFields' => 'profiles_fields',
+                     # encrypting method (php hash function)
+                'hash' => 'md5',
+ 
+                # send activation email
+                'sendActivationMail' => true,
+ 
+                # allow access for non-activated users
+                'loginNotActiv' => false,
+ 
+                # activate user on registration (only sendActivationMail = false)
+                'activeAfterRegister' => false,
+ 
+                # automatically login from registration
+                'autoLogin' => true,
+ 
+                # registration path
+                'registrationUrl' => array('/user/registration'),
+ 
+                # recovery password path
+                'recoveryUrl' => array('/user/recovery'),
+ 
+                # login form path
+                'loginUrl' => array('/user/login'),
+ 
+                # page after login
+                'returnUrl' => array('/user/profile'),
+ 
+                # page after logout
+                'returnLogoutUrl' => array('/user/login'),
+        ),
+ 
+        //Modules Rights
+   'rights'=>array(
+ 
+                'superuserName'=>'Admin', // Name of the role with super user privileges. 
+               'authenticatedName'=>'Authenticated',  // Name of the authenticated user role. 
+               'userIdColumn'=>'id', // Name of the user id column in the database. 
+               'userNameColumn'=>'username',  // Name of the user name column in the database. 
+               'enableBizRule'=>true,  // Whether to enable authorization item business rules. 
+               'enableBizRuleData'=>true,   // Whether to enable data for business rules. 
+               'displayDescription'=>true,  // Whether to use item description instead of name. 
+               'flashSuccessKey'=>'RightsSuccess', // Key to use for setting success flash messages. 
+               'flashErrorKey'=>'RightsError', // Key to use for setting error flash messages. 
+ 
+               'baseUrl'=>'/rights', // Base URL for Rights. Change if module is nested. 
+               'layout'=>'rights.views.layouts.main',  // Layout to use for displaying Rights. 
+               'appLayout'=>'webroot.themes.abound.views.layouts.main', // Application layout. 
+               'cssFile'=>'/css/rights.css', // Style sheet file to use for Rights. 
+               'install'=>false,  // Whether to enable installer. 
+               'debug'=>false,
+        ),
 
 	),
 
 	// application components
 	'components'=>array(
 
-		'user'=>array(
-
-			/* added for Rights module */
-			'class'=>'RWebUser', // Allows super users access implicitly.
-			// enable cookie-based authentication
-			'allowAutoLogin'=>true,
-		),
-
-		'authManager'=>array(
-			'class'=>'RDbAuthManager', // Provides support authorization item sorting.
-		),
+		 'user'=>array(
+                'class'=>'RWebUser',
+                // enable cookie-based authentication
+                'allowAutoLogin'=>true,
+                'loginUrl'=>array('/user/login'),
+        ),
+        'authManager'=>array(
+            'class'=>'RDbAuthManager',
+            'connectionID'=>'db',
+            'itemTable'=>'authitem',
+            'itemChildTable'=>'authitemchild',
+            'assignmentTable'=>'authassignment',
+            'rightsTable'=>'rights',
+        ),
 
 		// uncomment the following to enable URLs in path-format
-		/*
+		
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -85,7 +124,7 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-		*/
+		
 
 		// database settings are configured in database.php
 		'db'=>require(dirname(__FILE__).'/database.php'),
@@ -103,11 +142,11 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				/*
+				
 				array(
 					'class'=>'CWebLogRoute',
 				),
-				*/
+				
 			),
 		),
 

@@ -8,7 +8,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 </div>
 <!--div class="alert alert-info"-->
   <!--button type="button" class="close" data-dismiss="alert">×</button-->
-  <h4 style="margin-left:60px;"><strong>DOST Unified Laboratory Information Management System</strong></h4>
+  <h4 style="margin-left:60px;"><strong>E-Laundry</strong></h4>
   <p style="margin-left:60px;">A web-based Information Systems</p>
   
 <!--/div-->

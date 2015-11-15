@@ -15,6 +15,7 @@
           
 				if(Yii::app()->user->isSuperuser){
 					$menu = array(
+							array('label'=>'Dashboard', 'url'=>array('site/index')),
 	                        array('label'=>'Admin', 'url'=>array('/config/admin')),
 	                        array('label'=>'Rights', 'url'=>array('/rights')),
 	                        array('label'=>'Gii', 'url'=>array('/gii/default/login')),
@@ -30,33 +31,6 @@
 						}
 		          	}
 				}
-				
-				$url = Yii::app()->controller->id;
-				if($url == 'site')
-					$ctrl = 'lab/';
-				else
-					$ctrl = '';
-				
-				array_push($menu, array(
-					'label'=>'System <span class="caret"></span>', 
-					'url'=>'#',
-					'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),
-					'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"),
-					'items'=>array(
-						array('label'=>'Laboratories', 'url'=>array($ctrl.'lab/admin'), 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('lab')->isLabAdmin() == 1)) ? true : false),
-						//array('label'=>'Signatories', 'url'=>array('default/index'), 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('lab')->isLabAdmin() == 1)) ? true : false),
-						array('label'=>'Test Categories', 'url'=>array($ctrl.'testcategory/admin'), 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('lab')->isLabAdmin() == 1)) ? true : false),
-						array('label'=>'Sample Types', 'url'=>array($ctrl.'sampletype/admin'), 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('lab')->isLabAdmin() == 1)) ? true : false),
-						
-						array('label'=>'Set New OR Series', 'url'=>array('default/index'), 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('cashier')->isCashierAdmin() == 1)) ? true : false),
-						array('label' => '<hr>', 'visible'=>(!Yii::app()->user->isGuest && (Yii::app()->getModule('lab')->isLabAdmin() == 1)) ? true : false, array('itemOptions'=>array('class'=>'divider'))),
-						array('url'=>Yii::app()->getModule('user')->profileUrl, 'label'=>'My Account', 'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-						array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-						)
-				));
-				//array_push($menu, array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest));
-				//array_push($menu, array('label'=>'Logout ('.Yii::app()->getModule('user')->user()->getFullName().')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest));				
           ?>
           
           <div class="nav-collapse">
@@ -87,8 +61,7 @@
     <div class="navbar-inner">
     	<div class="container">
         <div class="style-switcher pull-left">
-       	 <?php //echo Yii::app()->Controller->module->name;?>
-         <b><?php echo (Yii::app()->Controller->module->name == 'rights') ? 'Rights Management Module' : Yii::app()->Controller->appTitle(Yii::app()->Controller->module->name);?></b>
+         <b><?php echo (Yii::app()->Controller->module->name == 'rights') ? 'Rights Management Module' : $this->setPageTitle(Yii::app()->Controller->module->name);?></b>
         </div>
         	
         	<!--div class="style-switcher pull-left">
